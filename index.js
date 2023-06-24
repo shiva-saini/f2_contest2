@@ -4,8 +4,9 @@ let sort_percentage = document.getElementById('sort_percentage');
 
 let data_div = document.getElementById('data');
 let response = [];
+
+//function to load data initially
 function myFUnc(){
-   
     fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1&sparkline=false')
     .then(response => response.json())
     .then((res) => {
@@ -57,11 +58,7 @@ function myFUnc(){
 
 myFUnc();
 
-
-
-
-
-
+//here we are attaching addEventListener to the event to search values by name or symbol
 search_name_symbol.addEventListener('input',(event)=>{
     event.preventDefault();
 
@@ -107,6 +104,8 @@ search_name_symbol.addEventListener('input',(event)=>{
 })
 
 
+
+//here we are attaching addEventListener to the event to search values by market cap
 sort_mkt_cap.addEventListener('input',(event) => {
 
     if(search_name_symbol.value === "" && sort_mkt_cap.value === "" && sort_percentage.value === ""){
@@ -153,6 +152,8 @@ sort_mkt_cap.addEventListener('input',(event) => {
 })
 
 
+
+//here we are attaching addEventListener to the event to search values by percentage
 sort_percentage.addEventListener('input',(event) => {
 
     if(search_name_symbol.value === "" && sort_mkt_cap.value === "" && sort_percentage.value === ""){
@@ -196,11 +197,3 @@ sort_percentage.addEventListener('input',(event) => {
     })
 })
 
-
-
-
-
-
-
-
-// callme();
