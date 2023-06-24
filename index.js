@@ -4,94 +4,72 @@ let sort_percentage = document.getElementById('sort_percentage');
 
 let data_div = document.getElementById('data');
 let response = [];
-fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1&sparkline=false')
-.then(response => response.json())
-.then((res) => {
-    response = res.map((element) => {
-
-        let items = document.createElement('tr');
-        items.className = 'items'
-        items.innerHTML = `
-        <div class="item1">
-           <img src=${element.image} alt="" srcset="">
-           <h3>${element.name}</h3>
-        </div>
-        <div class="item2">
-            ${element.symbol}
-        </div>
-        <div class="item3">
-            $${element.current_price}
-        </div>
-        <div class="item4">
-            $${element.total_volume}
-        </div>
-        <div class="item5">
-            ${element.price_change_percentage_24h}%
-        </div>
-        <div class="item6">
-             Mkt Cap:${element.market_cap}
-        </div>
-                  `
-data_div.appendChild(items);
-
-
-
-
-         let ojb = {
-            image:element.image,
-            name:element.name,
-            symbol:element.symbol,
-            currentPrice:element.current_price,
-            marketCap:element.market_cap,
-            percentageChange:element.market_cap_change_percentage_24h
-         }
-         return ojb;
+function myFUnc(){
+   
+    fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1&sparkline=false')
+    .then(response => response.json())
+    .then((res) => {
+        response = res.map((element) => {
+            let items = document.createElement('tr');
+            items.className = 'items'
+            items.innerHTML = `
+            <div class="item1">
+               <img src=${element.image} alt="" srcset="">
+               <h3>${element.name}</h3>
+            </div>
+            <div class="item2">
+                ${element.symbol}
+            </div>
+            <div class="item3">
+                $${element.current_price}
+            </div>
+            <div class="item4">
+                $${element.total_volume}
+            </div>
+            <div class="item5">
+                ${element.price_change_percentage_24h}%
+            </div>
+            <div class="item6">
+                 Mkt Cap:${element.market_cap}
+            </div>
+                      `
+    data_div.appendChild(items);
+    
+             let ojb = {
+                image:element.image,
+                name:element.name,
+                symbol:element.symbol,
+                currentPrice:element.current_price,
+                marketCap:element.market_cap,
+                percentageChange:element.market_cap_change_percentage_24h
+             }
+             return ojb;
+        })
+    }).catch(err => {
+        console.log(err)
     })
-}).catch(err => {
-    console.log(err)
-})
 
 
 
-
-function callme(){
-    console.log(response)
-    response.map((element) => {
-        let items = document.createElement('tr');
-                            items.className = 'items'
-                            items.innerHTML = `
-                            <div class="item1">
-                               <img src=${element.image} alt="" srcset="">
-                               <h3>${element.name}</h3>
-                            </div>
-                            <div class="item2">
-                                ${element.symbol}
-                            </div>
-                            <div class="item3">
-                                $${element.current_price}
-                            </div>
-                            <div class="item4">
-                                $${element.total_volume}
-                            </div>
-                            <div class="item5">
-                                ${element.price_change_percentage_24h}%
-                            </div>
-                            <div class="item6">
-                                 Mkt Cap:${element.market_cap}
-                            </div>
-                                      `
-            data_div.appendChild(items);
-
-    })
 }
 
 
 
-if(search_name_symbol.value == "" && sort_mkt_cap.value == "" && sort_percentage.value == ""){
-    callme();
-}
+myFUnc();
+
+
+
+
+
+
 search_name_symbol.addEventListener('input',(event)=>{
     event.preventDefault();
+
+    if(search_name_symbol.value === "" && sort_mkt_cap.value === "" && sort_percentage.value === ""){
+        console.log("hello")
+        myFUnc();
+    }
+    
         let val = event.target.value;
         // console.log(val)
         data_div.innerHTML = "";
@@ -130,6 +108,13 @@ search_name_symbol.addEventListener('input',(event)=>{
 
 
 sort_mkt_cap.addEventListener('input',(event) => {
+
+    if(search_name_symbol.value === "" && sort_mkt_cap.value === "" && sort_percentage.value === ""){
+        console.log("hello")
+        myFUnc();
+    }
+
+
     let val = event.target.value;
     data_div.innerHTML = "";
     let filtere = response.filter((element) => {
@@ -169,6 +154,12 @@ sort_mkt_cap.addEventListener('input',(event) => {
 
 
 sort_percentage.addEventListener('input',(event) => {
+
+    if(search_name_symbol.value === "" && sort_mkt_cap.value === "" && sort_percentage.value === ""){
+        console.log("hello")
+        myFUnc();
+    }
+
     let val = event.target.value;
     data_div.innerHTML = "";
     let filtere = response.filter((element) => {
@@ -204,6 +195,9 @@ sort_percentage.addEventListener('input',(event) => {
 
     })
 })
+
+
+
 
 
 
