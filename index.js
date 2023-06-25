@@ -4,6 +4,7 @@ let sort_percentage = document.getElementById('sort_percentage');
 
 let data_div = document.getElementById('data');
 let response = [];
+let response_with_name_symbol = [];
 
 //function to load data initially
 
@@ -67,6 +68,7 @@ search_name_symbol.addEventListener('input',(event)=>{
         let filtere = response.filter((element) => {
             return ((element.name.toLowerCase() === val.toLowerCase()) || (element.symbol.toLowerCase() === val.toLowerCase()));
         })
+        response_with_name_symbol = [...filtere]
         filtere.map((element) => {
               
             let items = document.createElement('tr');
@@ -113,7 +115,13 @@ sort_mkt_cap.addEventListener('click',(event) => {
     // let filtere = response.filter((element) => {
     //     return (element.marketCap.toString() === val.toString());
     // })
-    let filter = [...response];
+    
+    if(search_name_symbol.value !== ""){
+          filter = [...response_with_name_symbol]
+    }
+    else{
+        filter = [...response]
+    }
     filter.sort((a,b) => a.marketCap - b.marketCap);
     
    
@@ -157,7 +165,12 @@ sort_mkt_cap.addEventListener('click',(event) => {
 //here we are attaching addEventListener to the event to search values by percentage
 sort_percentage.addEventListener('click',(event) => {
     data_div.innerHTML = "";
-    let filter = [...response];
+    if(search_name_symbol.value !== ""){
+        filter = [...response_with_name_symbol]
+  }
+  else{
+      filter = [...response]
+  }
     filter.sort((a,b) => a.percentageChange - b.percentageChange);
     console.log(filter);
     filter.map((element) => {
