@@ -11,28 +11,9 @@ fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=mark
     .then(response => response.json())
     .then((res) => {
         response = res.map((element) => {
-             let ojb = {
-                image:element.image,
-                name:element.name,
-                symbol:element.symbol,
-                currentPrice:element.current_price,
-                marketCap:element.market_cap,
-                percentageChange:element.market_cap_change_percentage_24h
-             }
-             return ojb;
-        })
-    }).catch(err => {
-        console.log(err)
-})
 
 
-
-console.log(response)
-
-function myFUnc() {
-
-    response.map((element) => {
-    let items = document.createElement('tr');
+            let items = document.createElement('tr');
             items.className = 'items'
             items.innerHTML = `
             <div class="item1">
@@ -56,19 +37,30 @@ function myFUnc() {
             </div>
                       `
     data_div.appendChild(items);
-    })
-}
+
+             let ojb = {
+                image:element.image,
+                name:element.name,
+                symbol:element.symbol,
+                currentPrice:element.current_price,
+                marketCap:element.market_cap,
+                percentageChange:element.market_cap_change_percentage_24h,
+                totalVolume:element.total_volume
+             }
+             return ojb;
+        })
+    }).catch(err => {
+        console.log(err)
+})
+
+
+
+
 
 
 //here we are attaching addEventListener to the event to search values by name or symbol
 search_name_symbol.addEventListener('input',(event)=>{
-    event.preventDefault();
-
-    if(search_name_symbol.value === "" && sort_mkt_cap.value === "" && sort_percentage.value === ""){
-        console.log("hello")
-        myFUnc();
-    }
-    
+    event.preventDefault();    
         let val = event.target.value;
         // console.log(val)
         data_div.innerHTML = "";
@@ -103,26 +95,29 @@ search_name_symbol.addEventListener('input',(event)=>{
             data_div.appendChild(items);
 
         })
+
+        if(search_name_symbol.value === ""){
+            window.location.reload();
+        }
 })
 
 
 
+
+
+
 //here we are attaching addEventListener to the event to search values by market cap
-sort_mkt_cap.addEventListener('input',(event) => {
+sort_mkt_cap.addEventListener('click',(event) => {
 
-    if(search_name_symbol.value === "" && sort_mkt_cap.value === "" && sort_percentage.value === ""){
-        console.log("hello")
-        myFUnc();
-    }
-
-
-    let val = event.target.value;
     data_div.innerHTML = "";
-    let filtere = response.filter((element) => {
-        return (element.marketCap.toString() === val.toString());
-    })
+    // let filtere = response.filter((element) => {
+    //     return (element.marketCap.toString() === val.toString());
+    // })
+    let filter = [...response];
+    filter.sort((a,b) => a.marketCap - b.marketCap);
+    
    
-    filtere.map((element) => {
+    filter.map((element) => {
               
         let items = document.createElement('tr');
                         items.className = 'items'
@@ -135,41 +130,37 @@ sort_mkt_cap.addEventListener('input',(event) => {
                             ${element.symbol}
                         </td>
                         <td class="item3">
-                            $${element.current_price}
+                            $${element.currentPrice}
                         </td>
                         <td class="item4">
-                            $${element.total_volume}
+                            $${element.totalVolume}
                         </td>
                         <td class="item5">
-                            ${element.price_change_percentage_24h}%
+                            ${element.percentageChange}%
                         </td>
                         <td class="item6">
-                             Mkt Cap:${element.market_cap}
+                             Mkt Cap:${element.marketCap}
                         </td>
                                   `
         data_div.appendChild(items);
 
     })
+
+    
     
 })
 
 
 
+
+
 //here we are attaching addEventListener to the event to search values by percentage
-sort_percentage.addEventListener('input',(event) => {
-
-    if(search_name_symbol.value === "" && sort_mkt_cap.value === "" && sort_percentage.value === ""){
-        console.log("hello")
-        myFUnc();
-    }
-
-    let val = event.target.value;
+sort_percentage.addEventListener('click',(event) => {
     data_div.innerHTML = "";
-    let filtere = response.filter((element) => {
-        return (element.percentageChange.toString() === val.toString());
-    })
-
-    filtere.map((element) => {
+    let filter = [...response];
+    filter.sort((a,b) => a.percentageChange - b.percentageChange);
+    console.log(filter);
+    filter.map((element) => {
               
         let items = document.createElement('tr');
                         items.className = 'items'
@@ -182,24 +173,21 @@ sort_percentage.addEventListener('input',(event) => {
                             ${element.symbol}
                         </td>
                         <td class="item3">
-                            $${element.current_price}
+                            $${element.currentPrice}
                         </td>
                         <td class="item4">
-                            $${element.total_volume}
+                            $${element.totalVolume}
                         </td>
                         <td class="item5">
-                            ${element.price_change_percentage_24h}%
+                            ${element.percentageChange}%
                         </td>
                         <td class="item6">
-                             Mkt Cap:${element.market_cap}
+                             Mkt Cap:${element.marketCap}
                         </td>
                                   `
         data_div.appendChild(items);
 
     })
-
+   
    
 })
-
-
-myFUnc();
