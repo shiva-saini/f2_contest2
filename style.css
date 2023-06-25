@@ -4,18 +4,52 @@
 
 }
 
-.menu{
+body{
+    background-color: rgba(57, 55, 55, 0.534);
+}
+
+
+.response{
+    height: 20px;
+    width: 200px;
+}
+
+nav{
+    position:sticky;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 100px;
+    padding: 20px;
+}
+
+input{
+    text-align: center;
+    border-radius: 5px;
+    outline: none;
+    border: none;
+}
+
+button{
+    border-radius: 5px;
+    outline: none;
+    border: none;
+}
+/* .menu{
     display: flex;
     align-items: center;
     justify-content: space-around;
     height: 30px;
-    border:2px solid red;
-}
+    /* border:2px solid red; */
+    /* margin-bottom:10px; */
+    
+/* } */
 
 #data{
     display: flex;
     flex-flow: column wrap;
     min-height: 50px;
+    color: white;
     /* justify-content: center; */
 }
 
