@@ -69,7 +69,8 @@ search_name_symbol.addEventListener('input',(event)=>{
             return ((element.name.toLowerCase() === val.toLowerCase()) || (element.symbol.toLowerCase() === val.toLowerCase()));
         })
         response_with_name_symbol = [...filtere]
-        filtere.map((element) => {
+        console.log(response_with_name_symbol)
+        response_with_name_symbol.map((element) => {
               
             let items = document.createElement('tr');
                             items.className = 'items'
@@ -82,16 +83,16 @@ search_name_symbol.addEventListener('input',(event)=>{
                                 ${element.symbol}
                             </div>
                             <div class="item3">
-                                $${element.current_price}
+                                $${element.currentPrice}
                             </div>
                             <div class="item4">
-                                $${element.total_volume}
+                                $${element.totalVolume}
                             </div>
                             <div class="item5">
-                                ${element.price_change_percentage_24h}%
+                                ${element.percentageChange}%
                             </div>
                             <div class="item6">
-                                 Mkt Cap:${element.market_cap}
+                                 Mkt Cap:${element.marketCap}
                             </div>
                                       `
             data_div.appendChild(items);
